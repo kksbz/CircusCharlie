@@ -38,7 +38,7 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: c11a5690163cdff45aa4dac6b0624e64, type: 3}
+  - {fileID: 21300000, guid: 2f47b66195242b64e9b9c8393b033854, type: 3}
   - {fileID: -1850366838, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 419471123, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 650597385, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
@@ -115,13 +115,15 @@ SpriteAtlas:
   - {fileID: 1730710133, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 726500750, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 1921749179, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
+  - {fileID: 21300000, guid: 83d1da542c52bb34b86e8aa62d5da28a, type: 3}
+  - {fileID: 21300000, guid: 900e87a4c387d9641b194df5007da1f6, type: 3}
+  - {fileID: 21300000, guid: e59783381a307b04ba5e23c7ab1e8be4, type: 3}
   - {fileID: 21300000, guid: 07a64b1a0dba77042b38c66df9718841, type: 3}
-  - {fileID: 21300000, guid: 643d246a20e56264193eb5604999384f, type: 3}
   - {fileID: 21300000, guid: b20f12dce12f08f4096c54287c3f2feb, type: 3}
   - {fileID: 21300000, guid: 71e340fd3654a2b4b9ba44e9ed0f7932, type: 3}
   - {fileID: 21300000, guid: 52b153aec7a1ff249bb9718d80e519fb, type: 3}
   m_PackedSpriteNamesToIndex:
-  - stars
+  - star2
   - KakaoTalk_20230131_161821355_70
   - KakaoTalk_20230131_161821355_71
   - KakaoTalk_20230131_161821355_72
@@ -198,8 +200,10 @@ SpriteAtlas:
   - KakaoTalk_20230131_161821355_22
   - KakaoTalk_20230131_161821355_21
   - KakaoTalk_20230131_161821355_20
+  - KakaoTalk_20230201_091709355
+  - star1
+  - star3
   - stage2
-  - KakaoTalk_20230131_174028579
   - stage1
   - backgroundimage
   - winner

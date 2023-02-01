@@ -5,3 +5,5 @@
             Summary : jump시 중력적용 이슈발생
             Detail : 점프키 입력시 중력이 너무 크게 작용됨 값을 크게 줘도 엄청 느리게 점프하고 내려옴
             아직해결못함
+
+2023-02-01 / v0.0.3 TitleScene TitelLogo Scrolling     
