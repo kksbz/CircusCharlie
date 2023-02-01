@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - DeadZone
+  - Fence
   layers:
   - Default
   - TransparentFX

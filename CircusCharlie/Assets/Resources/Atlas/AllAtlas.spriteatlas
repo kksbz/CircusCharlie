@@ -119,6 +119,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 900e87a4c387d9641b194df5007da1f6, type: 3}
   - {fileID: 21300000, guid: e59783381a307b04ba5e23c7ab1e8be4, type: 3}
   - {fileID: 21300000, guid: 07a64b1a0dba77042b38c66df9718841, type: 3}
+  - {fileID: 21300000, guid: 877ee4dad89a55f4fb8bdfade85d4c88, type: 3}
   - {fileID: 21300000, guid: b20f12dce12f08f4096c54287c3f2feb, type: 3}
   - {fileID: 21300000, guid: 71e340fd3654a2b4b9ba44e9ed0f7932, type: 3}
   - {fileID: 21300000, guid: 52b153aec7a1ff249bb9718d80e519fb, type: 3}
@@ -204,6 +205,7 @@ SpriteAtlas:
   - star1
   - star3
   - stage2
+  - meter
   - stage1
   - backgroundimage
   - winner
