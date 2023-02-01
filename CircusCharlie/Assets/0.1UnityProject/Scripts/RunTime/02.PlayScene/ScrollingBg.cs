@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ScrollingBg : MonoBehaviour
 {
-    public RectTransform playerRectPos = default;
+    private GameObject tagetObj = default;
+    private RectTransform playerRectPos = default;
     private RectTransform bgRectPos =default;
     private float player_X = default;
+    private float bgSpeed = 0.05f;
+
     // Start is called before the first frame update
     void Start()
     {
-        playerRectPos = playerRectPos.GetComponent<RectTransform>();
+        tagetObj = GFunc.GetRootObj("GameObjs");
+        tagetObj = tagetObj.gameObject.FindChildObj("Player");
+        playerRectPos = tagetObj.gameObject.GetComponent<RectTransform>();
         bgRectPos = gameObject.GetComponent<RectTransform>();
     }
 
@@ -18,17 +23,28 @@ public class ScrollingBg : MonoBehaviour
     void Update()
     {
         player_X = PlayerXPos();
-        ScrollingBgObj(player_X);
+        MoveBg();
+        //ScrollingBgObj(player_X);
     }
 
     //플레이어 이동좌표 가져오는 함수
     private float PlayerXPos()
     {
         player_X = playerRectPos.anchoredPosition.x + 500f;
-        // Debug.Log($"플레이어x좌표: {player_X}");
         return player_X;
     } //PlayerXPos
 
+    private void MoveBg()
+    {
+        if (Input.GetKey(KeyCode.D))
+        {
+            gameObject.transform.Translate(Vector3.left * bgSpeed);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            gameObject.transform.Translate(Vector3.right * bgSpeed);
+        }
+    }
     //플레이어 이동거리만큼 배경이동
     private void ScrollingBgObj(float playerXPos_)
     {

@@ -5,7 +5,12 @@ using UnityEngine;
 public class BgSetup : MonoBehaviour
 {
     public GameObject bgPrefab = default;
+    public GameObject lastBgPrefab = default;
+    private float bgPrefabSize = default;
     private List<GameObject> bgList = default;
+    private GameObject meterSign = default;
+    // private int num = 4;
+    // private int meter = 50;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,21 +18,21 @@ public class BgSetup : MonoBehaviour
         bgList = SetupBgList();
         bgList = SetLocalScailBgObj(bgList);
         bgList = SetupBg(bgList);
-        // for (int i = 0; i < bgList.Count; i++)
-        // {
-        //     float a=  bgList[i].GetComponent<RectTransform>().anchoredPosition.x;
-        //     Debug.Log($"길이: {a}");
-        // }
+        // bgPrefabSize = bgList[1].transform.localPosition.x * 0.5f;
     } //Start
-
 
     private List<GameObject> SetupBgList()
     {
+        int meter_ = 90;
         for (int i = 0; i < 10; i++)
         {
             GameObject bg_ = Instantiate(bgPrefab);
+            bg_.name = $"Bg{i + 1}";
+            meterSign = bg_.FindChildObj("ShowMeter");
+            GFunc.SetTmpText(meterSign, $"{meter_}");
             bgList.Add(bg_);
             bg_.transform.parent = gameObject.transform;
+            meter_ -= 10;
         }
         return bgList;
     } //SetupBg
@@ -55,9 +60,23 @@ public class BgSetup : MonoBehaviour
         return bgList_;
     } //SetupBg
 
+    /* private void RepositionFirstObj()
+    {
+        float lastScrObjCurrentXPos = bgList[bgList.Count - 1].transform.localPosition.x;
+        if (lastScrObjCurrentXPos <= bgPrefabSize)
+        {
+            float lastScrObjInitXPos = (bgPrefabSize * 3) - 2;
+            bgList[0].transform.localPosition = new Vector2(lastScrObjInitXPos, 0f);
+            bgList[0].name = $"Bg{num + 1}";
+            meterSign = bgList[0].FindChildObj("ShowMeter");
+            GFunc.SetTmpText(meterSign, $"{meter}");
+            bgList.Add(bgList[0]);
+            bgList.RemoveAt(0);
+        }
+    } */
     // Update is called once per frame
     void Update()
     {
-
+        //RepositionFirstObj();
     }
 }

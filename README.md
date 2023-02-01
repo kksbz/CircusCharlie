@@ -12,3 +12,4 @@
             detail : 캐릭터 좌우이동을 Input.GetAxis()를 사용했는데
                     GetAxis()를 업데이트안에서 처리한게 문제였음
                     Input.GetKey()사용으로 해결함
+2023-02-02 / v0.2.0 Scrolling Background setup    

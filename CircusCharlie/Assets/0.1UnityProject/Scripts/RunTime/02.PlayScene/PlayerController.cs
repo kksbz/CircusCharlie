@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private const float PLAYER_STEP_ON_Y_ANGLE_MIN = 0.7f;
-    private float playerSpeed = 0.003f;
+    private float playerSpeed = 0.005f;
     private float jumpForce = 8f;
     private bool isGround = false;
     private bool isRun = false;
@@ -45,13 +45,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             isRun = true;
-            gameObject.transform.Translate(Vector3.right * playerSpeed);
+            // gameObject.transform.Translate(Vector3.right * playerSpeed);
             playerAni.SetBool("Run", isRun);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             isBackMove = true;
-            gameObject.transform.Translate(Vector3.left * playerSpeed);
+            // gameObject.transform.Translate(Vector3.left * playerSpeed);
             playerAni.SetBool("BackMove", isBackMove);
         }
     } //Move
