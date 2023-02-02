@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private const float PLAYER_STEP_ON_Y_ANGLE_MIN = 0.7f;
-    private float playerSpeed = 0.005f;
+    private float playerSpeed = 10f;
     private float jumpForce = 8f;
     private bool isGround = false;
     private bool isRun = false;
     private bool isBackMove = false;
     private bool isDead = false;
+    public GameObject tagetGoal = default;
     private Rigidbody2D playerRg2D = default;
     private Animator playerAni = default;
     private AudioSource playerAudio = default;
@@ -25,17 +26,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
-        {
-            Move();
-        }
-        else
-        {
-            isRun = false;
-            isBackMove = false;
-            playerAni.SetBool("Run", isRun);
-            playerAni.SetBool("BackMove", isBackMove);
-        }
+        Move();
         Jump();
     }
 
@@ -45,15 +36,38 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             isRun = true;
-            // gameObject.transform.Translate(Vector3.right * playerSpeed);
+            if (GameManager.Instance.playerMove == true)
+            {
+                gameObject.transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
+            }
             playerAni.SetBool("Run", isRun);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             isBackMove = true;
-            // gameObject.transform.Translate(Vector3.left * playerSpeed);
+            if (GameManager.Instance.playerMove == true)
+            {
+                gameObject.transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+            }
             playerAni.SetBool("BackMove", isBackMove);
         }
+        else
+        {
+            isRun = false;
+            isBackMove = false;
+            playerAni.SetBool("Run", isRun);
+            playerAni.SetBool("BackMove", isBackMove);
+        }
+
+        if(GameManager.Instance.playerMove == true)
+        {
+            tagetGoal.gameObject.SetActive(true);
+        }
+        else
+        {
+            tagetGoal.gameObject.SetActive(false);
+        }
+
     } //Move
 
     //플레이어 점프 함수
@@ -71,6 +85,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        playerAni.SetTrigger("Die");
     }
 
     //트리거 충돌 감지 처리를 위한 함수
@@ -81,6 +96,16 @@ public class PlayerController : MonoBehaviour
             isGround = true;
         }
         playerAni.SetBool("Ground", isGround);
+
+        if (collision.tag.Equals("DeadZone"))
+        {
+            Die();
+        }
+
+        if (collision.tag.Equals("Bonus"))
+        {
+
+        }
 
     } //OnTriggerEnter2D
 

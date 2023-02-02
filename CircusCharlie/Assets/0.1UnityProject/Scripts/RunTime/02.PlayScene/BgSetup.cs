@@ -5,7 +5,6 @@ using UnityEngine;
 public class BgSetup : MonoBehaviour
 {
     public GameObject bgPrefab = default;
-    public GameObject lastBgPrefab = default;
     private float bgPrefabSize = default;
     private List<GameObject> bgList = default;
     private GameObject meterSign = default;
@@ -30,6 +29,10 @@ public class BgSetup : MonoBehaviour
             bg_.name = $"Bg{i + 1}";
             meterSign = bg_.FindChildObj("ShowMeter");
             GFunc.SetTmpText(meterSign, $"{meter_}");
+            if(bg_.name == "Bg10")
+            {
+                bg_.tag = "Bg";
+            }
             bgList.Add(bg_);
             bg_.transform.parent = gameObject.transform;
             meter_ -= 10;
