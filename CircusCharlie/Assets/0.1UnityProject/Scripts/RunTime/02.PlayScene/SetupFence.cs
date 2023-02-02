@@ -8,7 +8,7 @@ public class SetupFence : MonoBehaviour
     public GameObject objPrefab_2 = default;
     public GameObject objPrefab_3 = default;
     private GameObject fenceObj = default;
-    private float spwanLate = 2f;
+    private float spwanLate = 1f;
     private float spwanTime = default;
     private List<GameObject> fenceList = default;
     // Start is called before the first frame update
@@ -18,7 +18,6 @@ public class SetupFence : MonoBehaviour
         fenceList = SetupFenceList();
         fenceList = SetLocalScailObj(fenceList);
         spwanTime = 0f;
-        // fenceList = SetFencePos(fenceList);
     }
 
     private List<GameObject> SetupFenceList()
@@ -58,34 +57,13 @@ public class SetupFence : MonoBehaviour
         return fenceList_;
     } //SetLocalScailObj
 
-    private List<GameObject> SetFencePos(List<GameObject> fenceList_)
-    {
-        RectTransform parentObj = gameObject.transform.parent.GetComponent<RectTransform>();
-        float widthSize = parentObj.sizeDelta.x * 0.5f;
-        for (int i = 0; i < fenceList_.Count; i++)
-        {
-            if (fenceList_[i].name == "Fence1")
-            {
-                fenceList_[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(widthSize + 100, 54f, 0f);
-            }
-            else if (fenceList_[i].name == "Fence2")
-            {
-                fenceList_[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(widthSize + 100, 23f, 0f);
-            }
-            else if (fenceList_[i].name == "Fence3")
-            {
-                fenceList_[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(widthSize + 100, -205f, 0f);
-            }
-        }
-        return fenceList_;
-    }
-
     //장애물 한개 가져오는 함수
     private GameObject GetFence(List<GameObject> fenceList_)
     {
         RectTransform parentObj = gameObject.transform.parent.GetComponent<RectTransform>();
         float widthSize = parentObj.sizeDelta.x * 0.5f;
         GameObject fence_ = default;
+        int rNBonus = Random.RandomRange(0, 10);
         int rN = Random.RandomRange(0, fenceList_.Count);
         float rNX = Random.RandomRange(100, 300);
         if (!fenceList_[rN].activeInHierarchy)
@@ -96,10 +74,18 @@ public class SetupFence : MonoBehaviour
             if (fence_.name == "Fence1")
             {
                 fence_.GetComponent<RectTransform>().anchoredPosition = new Vector3(widthSize + rNX, 54f, 0f);
+                if (rNBonus >= 8)
+                {
+                    fence_.FindChildObj("Bonus").gameObject.SetActive(true);
+                }
             }
             else if (fence_.name == "Fence2")
             {
                 fence_.GetComponent<RectTransform>().anchoredPosition = new Vector3(widthSize + rNX, 23f, 0f);
+                if (rNBonus <= 2)
+                {
+                    fence_.FindChildObj("Bonus").gameObject.SetActive(true);
+                }
             }
             else if (fence_.name == "Fence3")
             {
@@ -112,9 +98,10 @@ public class SetupFence : MonoBehaviour
     private GameObject SpwanFence(List<GameObject> fenceList_)
     {
         spwanTime += Time.deltaTime;
-        GameObject fence_ = GetFence(fenceList_);
+        GameObject fence_ = default; 
         if (spwanLate <= spwanTime)
         {
+            fence_ = GetFence(fenceList_);
             spwanTime = 0f;
             if (fence_ == null || fence_ == default)
             {
@@ -125,17 +112,11 @@ public class SetupFence : MonoBehaviour
         return fence_;
     }
 
-    //여기서 코루틴 안먹힘 조건 Rect안들어감
     private void ObjSet(GameObject fence_)
     {
-        if(fence_ == null || fence_ == default)
+        if (fence_ == null || fence_ == default)
         {
             return;
-        }
-
-        if(fence_.GetComponent<RectTransform>().anchoredPosition.x <= 0)
-        {
-            StartCoroutine(SetActiveFalseObj(fence_));
         }
     }
     IEnumerator SetActiveFalseObj(GameObject fence_)
@@ -147,7 +128,10 @@ public class SetupFence : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fenceObj = SpwanFence(fenceList);
-        ObjSet(fenceObj);
+        if (GameManager.Instance.playerMove == false)
+        {
+            fenceObj = SpwanFence(fenceList);
+            ObjSet(fenceObj);
+        }
     }
 }

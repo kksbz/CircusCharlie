@@ -29,14 +29,17 @@ public class ScrollingBg : MonoBehaviour
 
     private void MoveBg()
     {
-        // Debug.Log($"무브bg에 들어온 체크 : {GameManager.Instance.playerMove}");
+        if(GameManager.Instance.playerDead == true)
+        {
+            return;
+        }
         if (GameManager.Instance.playerMove == false)
         {
-            if (Input.GetKey(KeyCode.D))
+            if (ButtonController.Instance.useRightBtn == true || Input.GetKey(KeyCode.D))
             {
                 gameObject.transform.Translate(Vector3.left * bgSpeed * Time.deltaTime);
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (ButtonController.Instance.useLeftBtn == true || Input.GetKey(KeyCode.A))
             {
                 gameObject.transform.Translate(Vector3.right * bgSpeed * Time.deltaTime);
             }

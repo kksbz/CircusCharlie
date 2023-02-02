@@ -19,4 +19,9 @@
                 Summary : 장애물이 런타임때 생성, 장애물의 포지션값이 필요     
                 detail : 장애물의 RectTrancform의 anchoredPosition.x값이 필요함
                         움직이는 장애물의 갱신되는 anchoredPosition.x값을 계속받아야하는데 해결못함    
+2023-02-03 / v0.5.0 Fix Scrolling Fence Setup
+                Summary : 장애물 포지션값 필요
+                detail : 장애물의 anchoredPosition.x값이 필요하지 않은 문제였음
+                         플레이어가 움직이는 값만큼 장애물위치값을 같이 변경하는 방법으로
+                         장애물이 다가오거나 멀어지거나를 구현가능했음     
                         
