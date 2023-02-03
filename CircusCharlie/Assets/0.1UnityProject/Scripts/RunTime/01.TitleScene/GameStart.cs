@@ -6,6 +6,13 @@ public class GameStart : MonoBehaviour
 {
     public void StartBtn()
     {
-        GFunc.LoadScene(GData.PLAY_SCENE_NAME);
+        StartCoroutine(StageImageActiveSetup());
     } //StartBtn
+
+    IEnumerator StageImageActiveSetup()
+    {
+        GameManager.Instance.ShowStageImage(true);
+        yield return new WaitForSeconds(2f);
+        GFunc.LoadScene(GData.PLAY_SCENE_NAME);
+    }
 }

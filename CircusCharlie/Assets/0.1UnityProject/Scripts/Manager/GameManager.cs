@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool ClearStage = default;
     public int playerMoveCount = default;
     public int playerLife = default;
+    public int timeLimit = default;
     public int score = 0;
 
     public static GameManager Instance
@@ -44,12 +45,44 @@ public class GameManager : MonoBehaviour
 
     public void InitGame()
     {
-        playerLife = 3;
+        playerLife = 0;
         playerDead = false;
         playerMove = false;
         ClearStage = false;
+        timeLimit = 5000;
         score = 0;
         playerMoveCount = 0;
+    }
+
+    public void ReStartGame()
+    {
+
+        GameObject rootObj = GFunc.GetRootObj("UiObjs");
+        GameObject endObj = rootObj.FindChildObj("EndImage");
+        GameObject goTitleObj = endObj.FindChildObj("GoToTitle");
+
+        endObj.SetActive(true);
+        StartCoroutine(SetActiveObj(goTitleObj));
+        
+            
+        
+    }
+
+    IEnumerator SetActiveObj(GameObject goTitleObj_)
+    {
+        //여기부분 버튼누르는거 해결해야됨
+        while (true)
+        {
+            if (Input.anyKeyDown || Input.GetMouseButtonDown(0))
+            {
+                GameManager.instance.InitGame();
+                GFunc.LoadScene(GData.TITLE_SCENE_NAME);
+            }
+            goTitleObj_.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            goTitleObj_.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
     public void GetScore()
     {

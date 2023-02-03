@@ -9,7 +9,6 @@ public class ScrollingFence : MonoBehaviour
     private GameObject playerObj = default;
     private GameObject bgObj = default;
     private RectTransform objAPosX = default;
-    private float tagetSpeed = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +24,7 @@ public class ScrollingFence : MonoBehaviour
             return;
         }
         
-        if (gameObject.name != "Fence3")
+        if (gameObject.name != "Fence5")
         {
             transform.Translate(Vector2.left * objSpeed * Time.deltaTime);
         }
@@ -34,11 +33,11 @@ public class ScrollingFence : MonoBehaviour
         {
             if (ButtonController.Instance.useRightBtn == true || Input.GetKey(KeyCode.D))
             {
-                gameObject.transform.Translate(Vector3.left * tagetSpeed * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.left * GData.MOVE_SPEED * Time.deltaTime);
             }
             else if (ButtonController.Instance.useLeftBtn == true || Input.GetKey(KeyCode.A))
             {
-                gameObject.transform.Translate(Vector3.right * tagetSpeed * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.right * GData.MOVE_SPEED * Time.deltaTime);
             }
         }
     }
@@ -46,7 +45,7 @@ public class ScrollingFence : MonoBehaviour
     IEnumerator SetActiveFalse()
     {
         yield return new WaitForSeconds(1f);
-        if (gameObject.name != "Fence3")
+        if (gameObject.name != "Fence5")
         {
             if (gameObject.FindChildObj("Bonus").gameObject.activeInHierarchy)
             {

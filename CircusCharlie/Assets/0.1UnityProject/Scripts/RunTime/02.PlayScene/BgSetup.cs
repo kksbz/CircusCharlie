@@ -28,6 +28,8 @@ public class BgSetup : MonoBehaviour
             GameObject bg_ = Instantiate(bgPrefab);
             bg_.name = $"Bg{i + 1}";
             meterSign = bg_.FindChildObj("ShowMeter");
+            // meterSign = bg_.FindChildObj("BgImage");
+            // meterSign = meterSign.FindChildObj("ShowMeter");
             GFunc.SetTmpText(meterSign, $"{meter_}");
             if(bg_.name == "Bg10")
             {

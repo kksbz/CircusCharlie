@@ -24,4 +24,5 @@
                 detail : 장애물의 anchoredPosition.x값이 필요하지 않은 문제였음
                          플레이어가 움직이는 값만큼 장애물위치값을 같이 변경하는 방법으로
                          장애물이 다가오거나 멀어지거나를 구현가능했음     
+2023-02-03 / v1.0.0 Fix FenceObj Setup, Stage1 complete
                         

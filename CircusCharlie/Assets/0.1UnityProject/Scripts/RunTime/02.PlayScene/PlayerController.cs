@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float playerSpeed = 10f;
-    private float jumpForce = 8f;
+    private float jumpForce = 7.3f;
     private bool isGround = false;
     private bool isRun = false;
     private bool isBackMove = false;
     private bool isClear = false;
     private bool lockTime = false;
-    public GameObject tagetGoal = default;
     private Rigidbody2D playerRg2D = default;
     private Animator playerAni = default;
     private AudioSource playerAudio = default;
@@ -27,6 +25,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.timeLimit <= 0)
+        {
+            Die();
+        }
         Move();
         Jump();
     }
@@ -34,16 +36,19 @@ public class PlayerController : MonoBehaviour
     //플레이어 좌우이동 함수
     private void Move()
     {
-        if (GameManager.Instance.playerDead == true)
+        //플레이어 죽으면 리턴
+        if (GameManager.Instance.playerDead == true || GameManager.Instance.ClearStage == true)
         {
             return;
         }
+        //버튼과 키보드키 둘다 적용
         if (ButtonController.Instance.useRightBtn == true || Input.GetKey(KeyCode.D))
         {
             isRun = true;
+            //플레이어가 마지막맵에 진입해야 움직임 그전에는 모션만취하고 배경이 움직임
             if (GameManager.Instance.playerMove == true)
             {
-                gameObject.transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.right * GData.MOVE_SPEED * Time.deltaTime);
             }
             playerAni.SetBool("Run", isRun);
         }
@@ -52,7 +57,7 @@ public class PlayerController : MonoBehaviour
             isBackMove = true;
             if (GameManager.Instance.playerMove == true)
             {
-                gameObject.transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.left * GData.MOVE_SPEED * Time.deltaTime);
             }
             playerAni.SetBool("BackMove", isBackMove);
         }
@@ -63,16 +68,6 @@ public class PlayerController : MonoBehaviour
             playerAni.SetBool("Run", isRun);
             playerAni.SetBool("BackMove", isBackMove);
         }
-
-        if (GameManager.Instance.playerMove == true)
-        {
-            tagetGoal.gameObject.SetActive(true);
-        }
-        else
-        {
-            tagetGoal.gameObject.SetActive(false);
-        }
-
     } //Move
 
     //플레이어 점프 함수
@@ -90,7 +85,7 @@ public class PlayerController : MonoBehaviour
     //플레이어 죽음
     private void Die()
     {
-        if(lockTime)
+        if (lockTime)
         {
             return;
         }
@@ -99,33 +94,38 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.playerLife -= 1;
 
         Debug.Log($"목숨:{GameManager.Instance.playerLife}");
+        //코루틴 실행
+
         StartCoroutine(StageImageFalse());
 
-        if (GameManager.Instance.playerLife == 0)
-        {
-            GFunc.LoadScene(GData.TITLE_SCENE_NAME);
-            GameManager.Instance.InitGame();
-        }
-    }
-    
+    } //Die
+
+    //플레이어 죽었을 때 stage화면출력 코루틴함수
     IEnumerator StageImageFalse()
     {
         playerAni.SetTrigger("Die");
         yield return new WaitForSeconds(1f);
+        if(GameManager.Instance.playerLife < 0)
+        {
+            GameManager.Instance.ReStartGame();
+        }
         GameManager.Instance.ShowStageImage(true);
         yield return new WaitForSeconds(2f);
+
         GameManager.Instance.ShowStageImage(false);
         GameManager.Instance.playerDead = false;
         playerAni.SetTrigger("Revival");
+        GameManager.Instance.timeLimit = 5000;
         lockTime = false;
-    }
+    } //StageImageFalse
 
-    private void Clear()
+    //스테이지 클리어 함수
+    private void StageClear()
     {
         isClear = true;
         GameManager.Instance.ClearStage = true;
         playerAni.SetTrigger("ClearStage");
-    }
+    } //StageClear
 
     //트리거 충돌 감지 처리를 위한 함수
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.tag.Equals("Goal"))
         {
-            Clear();
+            StageClear();
         }
         if (collision.tag.Equals("Ground"))
         {
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
             else if (collision.tag.Equals("BonusZone"))
             {
                 GameManager.Instance.score += 100;
-                Debug.Log($"콜리젼네임 = {collision.name}");
+                // Debug.Log($"콜리젼네임 = {collision.name}");
             }
             Debug.Log($"점수: {GameManager.Instance.score}");
         }
