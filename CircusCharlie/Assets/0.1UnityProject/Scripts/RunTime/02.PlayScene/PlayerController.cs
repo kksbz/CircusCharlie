@@ -25,10 +25,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.timeLimit <= 0)
-        {
-            Die();
-        }
         Move();
         Jump();
     }
@@ -107,7 +103,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if(GameManager.Instance.playerLife < 0)
         {
-            GameManager.Instance.ReStartGame();
+            GameManager.Instance.isGameOver = true;
+            GFunc.LoadScene(GData.ENDGAME_NAME);
         }
         GameManager.Instance.ShowStageImage(true);
         yield return new WaitForSeconds(2f);
@@ -125,7 +122,23 @@ public class PlayerController : MonoBehaviour
         isClear = true;
         GameManager.Instance.ClearStage = true;
         playerAni.SetTrigger("ClearStage");
+        StartCoroutine(BonusTimeScore());
     } //StageClear
+
+    IEnumerator BonusTimeScore()
+    {
+        while(true)
+        {
+            GameManager.Instance.timeLimit -= 10;
+            yield return new WaitForSeconds(0.005f);
+            GameManager.Instance.score += 100;
+            yield return new WaitForSeconds(0.005f);
+            if(GameManager.Instance.timeLimit <= 0)
+            {
+                yield break;
+            }
+        }
+    }
 
     //트리거 충돌 감지 처리를 위한 함수
     private void OnTriggerEnter2D(Collider2D collision)

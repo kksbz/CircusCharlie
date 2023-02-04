@@ -24,5 +24,11 @@
                 detail : 장애물의 anchoredPosition.x값이 필요하지 않은 문제였음
                          플레이어가 움직이는 값만큼 장애물위치값을 같이 변경하는 방법으로
                          장애물이 다가오거나 멀어지거나를 구현가능했음     
-2023-02-03 / v1.0.0 Fix FenceObj Setup, Stage1 complete
+2023-02-03 / v1.0.0 Fix FenceObj Setup, Stage1 complete    
+2023-02-04 / v1.1.0 EndScene setup
+                Summart : 게임오버시 게임오버창 출력
+                detail : 처음 구현시 게임오버시 스테이지씬 안에있는 게임오버이미지오브젝트를 팝업시키는방식으로 구현
+                         모든 스테이지에서 게임오버창을 공유해야 되는 문제를 해결하기 위해 새로운 Scene을 만듬
+                         EndScene을 만들어 씬전환으로 게임오버창을 구현함 EndScene에서 타이틀씬으로 이동가능하게 구현
+                         
                         

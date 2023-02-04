@@ -29,7 +29,7 @@ public class ScoreBoard : MonoBehaviour
 
     private void BonusTimeCheck()
     {
-        if(GameManager.Instance.playerDead == true)
+        if(GameManager.Instance.playerDead == true || GameManager.Instance.ClearStage == true)
         {
             return;
         }

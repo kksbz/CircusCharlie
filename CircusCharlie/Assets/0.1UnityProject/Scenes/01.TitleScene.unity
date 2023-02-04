@@ -862,6 +862,7 @@ MonoBehaviour:
   ClearStage: 0
   playerMoveCount: 0
   playerLife: 0
+  timeLimit: 0
   score: 0
 --- !u!4 &916193365
 Transform:
