@@ -23,18 +23,18 @@ public class ScoreBoard : MonoBehaviour
     void Update()
     {
         BonusTimeCheck();
-        GFunc.SetTmpText(scoreObj, $"{GameManager.Instance.score}");
+        GFunc.SetTmpText(scoreObj, $"{GameManager.Instance.score.ToString("D6")}");
         GFunc.SetTmpText(bonusTimeObj, $"- {GameManager.Instance.timeLimit}");
     } //Update
 
     private void BonusTimeCheck()
     {
-        if(GameManager.Instance.playerDead == true || GameManager.Instance.ClearStage == true)
+        if (GameManager.Instance.playerDead == true || GameManager.Instance.ClearStage == true)
         {
             return;
         }
         timeCheck += Time.deltaTime;
-        if(timeLate <= timeCheck)
+        if (timeLate <= timeCheck)
         {
             timeCheck = 0f;
             GameManager.Instance.timeLimit -= 10;

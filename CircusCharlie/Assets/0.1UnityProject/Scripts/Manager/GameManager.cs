@@ -8,11 +8,12 @@ public class GameManager : MonoBehaviour
     public bool playerDead = default;
     public bool playerMove = default;
     public bool ClearStage = default;
+    public bool isGameOver = false;
+    public bool isLastMap = false;
     public int playerMoveCount = default;
     public int playerLife = default;
     public int timeLimit = default;
     public int score = 0;
-    public bool isGameOver = false;
 
     public static GameManager Instance
     {
@@ -45,11 +46,12 @@ public class GameManager : MonoBehaviour
 
     public void InitGame()
     {
-        playerLife = 0;
+        playerLife = 3;
         playerDead = false;
         playerMove = false;
         ClearStage = false;
         isGameOver = false;
+        isLastMap = false;
         timeLimit = 5000;
         score = 0;
         playerMoveCount = 0;
@@ -66,11 +68,6 @@ public class GameManager : MonoBehaviour
                 GFunc.LoadScene(GData.TITLE_SCENE_NAME);
             }
         }
-    }
-    
-    public void GetScore()
-    {
-
     }
 
     public void ShowStageImage(bool die)

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/0.1UnityProject/Scenes/01.TitleScene.unity
     guid: 47f0d8c1d0d5ea744bf6c28740ab8bfc
   - enabled: 1
-    path: Assets/0.1UnityProject/Scenes/02.PlayScene.unity
+    path: Assets/0.1UnityProject/Scenes/02.Stage_1.unity
     guid: fd646f13e4e64e84b99ba1defa17aae8
   - enabled: 1
     path: Assets/0.1UnityProject/Scenes/EndScene.unity

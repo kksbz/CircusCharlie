@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour
     private bool isBackMove = false;
     private bool isClear = false;
     private bool lockTime = false;
+    public AudioClip jumpSound = default;
+    public AudioClip deatSound = default;
+    public AudioClip clearSound = default;
+    public AudioClip bonusCheckSound = default;
     private Rigidbody2D playerRg2D = default;
     private Animator playerAni = default;
     private AudioSource playerAudio = default;
@@ -33,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         //플레이어 죽으면 리턴
-        if (GameManager.Instance.playerDead == true || GameManager.Instance.ClearStage == true)
+        if (GameManager.Instance.playerDead == true|| GameManager.Instance.ClearStage == true)
         {
             return;
         }
@@ -72,6 +76,8 @@ public class PlayerController : MonoBehaviour
         if ((ButtonController.Instance.useJumpBtn == true || Input.GetKeyDown(KeyCode.Space)) && isGround == true)
         {
             isGround = false;
+            playerAudio.clip = jumpSound;
+            playerAudio.Play();
             playerRg2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
         ButtonController.Instance.useJumpBtn = false;
@@ -89,17 +95,17 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.playerDead = true;
         GameManager.Instance.playerLife -= 1;
 
-        Debug.Log($"목숨:{GameManager.Instance.playerLife}");
+        // Debug.Log($"목숨:{GameManager.Instance.playerLife}");
         //코루틴 실행
-
         StartCoroutine(StageImageFalse());
-
     } //Die
 
     //플레이어 죽었을 때 stage화면출력 코루틴함수
     IEnumerator StageImageFalse()
     {
         playerAni.SetTrigger("Die");
+        playerAudio.clip = deatSound;
+        playerAudio.Play();
         yield return new WaitForSeconds(1f);
         if(GameManager.Instance.playerLife < 0)
         {
@@ -119,14 +125,18 @@ public class PlayerController : MonoBehaviour
     //스테이지 클리어 함수
     private void StageClear()
     {
+        playerAudio.clip = clearSound;
+        playerAudio.Play();
         isClear = true;
         GameManager.Instance.ClearStage = true;
         playerAni.SetTrigger("ClearStage");
         StartCoroutine(BonusTimeScore());
     } //StageClear
 
+    //클리어시 남은 보너스타임을 보너스점수로 바꿔주는 코루틴
     IEnumerator BonusTimeScore()
     {
+        StartCoroutine(clearSoundAfter());
         while(true)
         {
             GameManager.Instance.timeLimit -= 10;
@@ -135,9 +145,21 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.005f);
             if(GameManager.Instance.timeLimit <= 0)
             {
+                playerAudio.Stop();
+                yield return new WaitForSeconds(2f);
+                GameManager.Instance.InitGame();
+                GFunc.LoadScene(GData.TITLE_SCENE_NAME);
                 yield break;
             }
         }
+    }
+
+    IEnumerator clearSoundAfter()
+    {
+        yield return new WaitForSeconds(playerAudio.clip.length);
+        playerAudio.clip = bonusCheckSound;
+        playerAudio.loop = bonusCheckSound;
+        playerAudio.Play();
     }
 
     //트리거 충돌 감지 처리를 위한 함수
@@ -169,7 +191,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.score += 100;
                 // Debug.Log($"콜리젼네임 = {collision.name}");
             }
-            Debug.Log($"점수: {GameManager.Instance.score}");
+            // Debug.Log($"점수: {GameManager.Instance.score}");
         }
     } //OnTriggerEnter2D
 

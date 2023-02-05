@@ -38,8 +38,10 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 85b6a6103f7a3e8499b4c0e7891dcb87, type: 3}
   - {fileID: 21300000, guid: 4bbe61500244abe429bd7b39fe7f89df, type: 3}
   - {fileID: 21300000, guid: 2f47b66195242b64e9b9c8393b033854, type: 3}
+  - {fileID: 21300000, guid: 1987ed91fa70e9546b25c7ea53e82e7c, type: 3}
   - {fileID: -1850366838, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 419471123, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
   - {fileID: 650597385, guid: 135984e1a4b812d41a81c211bb6b026c, type: 3}
@@ -126,8 +128,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 71e340fd3654a2b4b9ba44e9ed0f7932, type: 3}
   - {fileID: 21300000, guid: 52b153aec7a1ff249bb9718d80e519fb, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Icon_Play
   - KakaoTalk_20230203_103239105
   - star2
+  - Button_Circle_Yellow_250px
   - KakaoTalk_20230131_161821355_70
   - KakaoTalk_20230131_161821355_71
   - KakaoTalk_20230131_161821355_72

@@ -11,7 +11,7 @@ public class SetupFence : MonoBehaviour
     public GameObject objPrefab_5 = default;
     public GameObject tagetGoal = default;
     private GameObject fenceObj = default;
-    private float spwanLate = 1f;
+    private float spwanLate = 1.5f;
     private float spwanTime = default;
     private List<GameObject> fenceList = default;
     // Start is called before the first frame update
@@ -118,7 +118,7 @@ public class SetupFence : MonoBehaviour
     {
         spwanTime += Time.deltaTime;
         GameObject fence_ = default;
-        if (GameManager.Instance.playerMove == false)
+        if (GameManager.Instance.playerMove == false && GameManager.Instance.playerDead == false)
         {
             if (spwanLate <= spwanTime)
             {
@@ -156,9 +156,22 @@ public class SetupFence : MonoBehaviour
         }
     } //ShowGoalObj
 
+    //플레이어가 죽었을 때 모든장애물 리셋하는 함수
+    private void AllFenceActiveFalse(List<GameObject> fenceList_)
+    {
+        if (GameManager.Instance.playerDead == true)
+        {
+            foreach (GameObject fence_ in fenceList_)
+            {
+                fence_.SetActive(false);
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        AllFenceActiveFalse(fenceList);
         fenceObj = SpwanFence(fenceList);
         ObjSet(fenceObj);
         ShowGoalObj();
